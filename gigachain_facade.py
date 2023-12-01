@@ -6,6 +6,7 @@ from langchain.schema import HumanMessage, SystemMessage
 from langchain.chat_models.gigachat import GigaChat
 
 from settings import GIGACHAT_CREDENTIAL
+from settings import PRIMING_MESSAGE
 
 # Авторизация в сервисе GigaChat
 chat = GigaChat(
@@ -27,7 +28,7 @@ def template(text):
 
 def ask_gigachat(userMessage):
     messages = []
-    messages.append(SystemMessage(content="Очень внимательный человек"))
+    messages.append(SystemMessage(content=PRIMING_MESSAGE))
     messages.append(template(userMessage.message))
 
     for m in userMessage.prev:

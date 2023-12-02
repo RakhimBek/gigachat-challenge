@@ -47,8 +47,8 @@ def template(text):
     """
 
     return HumanMessage(content=f"""
-        Вытащи все факты о человеке по его сообщению.
-        Верни каждый факт как массив объектов JSON, где ключ text - исходное сообщение, fact - факт.
+        Выведи только существующиме факты из жизни автора, личность, желания, хобби, увлечения, характеристики следующие из его сообщения
+        Верни ответ в формате YAML без дефисов в начале
         Вот само сообщение: {str(text)}
     """)
 
@@ -68,11 +68,21 @@ def ask_gigachat(userMessage):
         template(' '.join(messages))
     ])
 
-    facts = json.loads(answer.content)
-    for v in facts:
-        insert_fact(username=userMessage.username.lower(), text=v['text'], fact=v['fact'])
+    try:
+        facts = json.loads(answer.content)
 
-    return {
-        "username": userMessage.username,
-        "facts": facts
-    }
+        for v in facts:
+            print(v)
+            insert_fact(username=userMessage.username.lower(), text=v['text'], fact=v['fact'])
+
+        return {
+            "username": userMessage.username,
+            "facts": facts
+        }
+    except Exception as e:
+        print(f'{answer.content}')
+        print(e)
+        return {
+            "username": userMessage.username,
+            "facts": []
+        }

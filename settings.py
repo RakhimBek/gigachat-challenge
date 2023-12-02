@@ -10,5 +10,5 @@ DEBUG = config('DEBUG', cast=bool, default=True)
 HOST = config('HOST', cast=str, default='0.0.0.0')
 PORT = config('PORT', cast=int, default=8080)
 GIGACHAT_CREDENTIAL = config('GIGACHAT_CREDENTIAL', cast=str, default=None)
-PRIMING_MESSAGE = config('PRIMING_MESSAGE', cast=str, default="Умеешь видеть факты в текстах")
+PRIMING_MESSAGE = config('PRIMING_MESSAGE', cast=str, default="описание, одежда, личные качества, желания, образ жизни, факты их жизни, место жительства, возраст")
 DATABASE_PATH="db/sqll.db"

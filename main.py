@@ -36,4 +36,4 @@ async def ask(message: Message):
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host=HOST, port=PORT)
+    uvicorn.run("main:app", host=HOST, port=PORT, reload=True)

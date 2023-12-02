@@ -20,8 +20,18 @@ chat = GigaChat(
 class Message(BaseModel):
     name: str
     message: str
-    prev: list
-    next: list
+    prev: list[str]
+    next: list[str]
+
+
+class Fact(BaseModel):
+    text: str
+    fact: str
+
+
+class Facts(BaseModel):
+    name: str
+    facts: list[Fact]
 
 
 def template(text):

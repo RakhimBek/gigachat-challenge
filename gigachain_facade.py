@@ -76,3 +76,11 @@ def ask_gigachat(userMessage):
             "username": userMessage.username,
             "facts": []
         }
+
+
+if __name__ == '__main__':
+    answer = chat([
+        SystemMessage(content=PRIMING_MESSAGE),
+        HumanMessage(content=f"Что-то это видео не очень")
+    ])
+

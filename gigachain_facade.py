@@ -1,4 +1,5 @@
 import json
+import yaml
 
 from pydantic import BaseModel
 
@@ -47,8 +48,8 @@ def template(text):
     """
 
     return HumanMessage(content=f"""
-        Выведи только существующиме факты из жизни автора, личность, желания, хобби, увлечения, характеристики следующие из его сообщения
-        Верни ответ в формате YAML без дефисов в начале
+        Формат ответа YAML
+        Выведи только существующиме факты из жизни автора, личность, желания, хобби, увлечения, характеристики следующие из его сообщения    
         Вот само сообщение: {str(text)}
     """)
 
@@ -63,17 +64,24 @@ def ask_gigachat(userMessage):
     for m in userMessage.next:
         messages.append(m)
 
+    joined_content = ' '.join(messages)
     answer = chat([
         SystemMessage(content=PRIMING_MESSAGE),
-        template(' '.join(messages))
+        template(joined_content)
     ])
 
     try:
-        facts = json.loads(answer.content)
+        content_yaml = answer.content
 
-        for v in facts:
-            print(v)
-            insert_fact(username=userMessage.username.lower(), text=v['text'], fact=v['fact'])
+        content_object = yaml.safe_load(content_yaml)
+
+        facts = {}
+        for entry in content_object:
+            row = dict(entry)
+            for key in row.keys():
+                value = row[key]
+                insert_fact(username=userMessage.username.lower(), text=joined_content, fact=value)
+                facts[key] = value
 
         return {
             "username": userMessage.username,

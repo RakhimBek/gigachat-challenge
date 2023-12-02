@@ -1,26 +1,48 @@
+API решения задачи Хакатона Phystech GigaChat Challenge (https://gigachat-challenge.tech/)
+<hr>
+
+#### Формулировка задачи:
+Придумать и реализовать бизнес-продукт на основании возможностей, которые предоставляют **GigaChat** и его SDK GigaChain, а также нейросеть **Kandinsky**.
 
 
 <hr>
+- python 3.12
 
-```javascript
+## Quick Start Guide
 
-fetch("/api/ask", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-        "username": "string",
-        "message": "string",
-        "prev": [
-            "string"
-        ],
-        "next": [
-            "string"
-        ]
-    })
-})
-    .then(x => x.json())
-    .then(x => console.log(x))
+### Clone git repo
+```
+git clone git@github.com:RakhimBek/gigachat-challenge.git
+```
 
+### Copy environment variables file
+```
+$ add GIGACHAT_CREDENTIAL to .env
+```
+
+###  Add environment variable
+```
+$ source .env
+$ export $(cut -d= -f1 .env)
+```
+
+### Update pip, setuptools
+```
+$ pip install -U pip setuptools
+```
+
+### Install requirements:
+```
+$ pip install -r requirements.txt
+```
+
+### Run server
+```
+$ python main.py
+```
+
+### API
+Automatic interactive API documentation
+```
+/docs
 ```

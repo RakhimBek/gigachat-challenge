@@ -1,7 +1,8 @@
 import json
 
 from pydantic import BaseModel
-from langchain.chat_models.gigachat import GigaChat
+
+from storage_dao import insert_fact
 
 """Пример работы с чатом через gigachain"""
 from langchain.schema import HumanMessage, SystemMessage
@@ -68,6 +69,9 @@ def ask_gigachat(userMessage):
     ])
 
     facts = json.loads(answer.content)
+    for v in facts:
+        insert_fact(username=userMessage.name.lower(), text=v['text'], fact=v['fact'])
+
     return {
         "name": userMessage.name,
         "facts": facts

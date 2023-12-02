@@ -9,6 +9,8 @@ from settings import PROJECT_NAME
 
 from gigachain_facade import Message
 from gigachain_facade import ask_gigachat
+from storage_dao import fetch_all_facts
+from storage_initializer import init_database
 
 app = FastAPI(
     title=PROJECT_NAME,
@@ -27,7 +29,12 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return ({"message": "Hello World"})
+
+
+@app.get("/api/facts/all")
+async def root():
+    return fetch_all_facts()
 
 
 @app.post("/api/ask")
@@ -41,4 +48,5 @@ async def ask_all(messages: list[Message]):
 
 
 if __name__ == '__main__':
+    init_database()
     uvicorn.run("main:app", host=HOST, port=PORT, reload=True)

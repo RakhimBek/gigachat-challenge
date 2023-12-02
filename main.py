@@ -8,7 +8,7 @@ from settings import PORT
 from settings import PROJECT_NAME
 
 from dtos import Message
-from gigachain_facade import ask_gigachat
+from gigachain_facade import ask_gigachat, ask_gigachat_as_is
 from storage_dao import fetch_all_facts, fetch_all_facts_of_a_user
 from storage_initializer import init_database
 
@@ -30,6 +30,11 @@ app.add_middleware(
 @app.get("/")
 async def root():
     return ({"message": "Hello World"})
+
+
+@app.get("/api/chat")
+async def root(system_message="", human_message="Who you are ?"):
+    return ask_gigachat_as_is(system_message, human_message)
 
 
 @app.get("/api/facts/all")

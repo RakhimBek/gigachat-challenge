@@ -35,6 +35,13 @@ def template(text):
     """)
 
 
+def ask_gigachat_as_is(system_message, human_message):
+    return chat([
+        SystemMessage(content=system_message),
+        HumanMessage(content=human_message)
+    ])
+
+
 def ask_gigachat(userMessage):
     messages = []
     messages.append(userMessage.message)

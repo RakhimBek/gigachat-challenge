@@ -1,3 +1,5 @@
+import json
+
 from pydantic import BaseModel
 from langchain.chat_models.gigachat import GigaChat
 
@@ -23,22 +25,40 @@ class Message(BaseModel):
 
 
 def template(text):
-    return HumanMessage(content=f'Напиши все факты о человеке по его сообщению: {str(text)}')
+    """example:
+        Вытащи все факты о человеке по его сообщению.
+        Верни результат как массив строк в JSON формате, в составе  обьекта с полем facts.
+        Вот само сообщение:
+            Я люблю ходить на рыбалку и сидеть там часами.
+            Ещё у меня есть пес который тоже иногда ходит вместе со мной.
+            Он любит бегать вокруг и исследовать местность.
+            Иногда я паяю простые схемы, а так ещё мечтаю о собственном бизнесе, неком производстве
+    """
+
+    return HumanMessage(content=f"""
+        Вытащи все факты о человеке по его сообщению.
+        Верни каждый факт как массив объектов JSON, где ключ text - исходное сообщение, fact - факт.
+        Вот само сообщение: {str(text)}
+    """)
 
 
 def ask_gigachat(userMessage):
     messages = []
-    messages.append(SystemMessage(content=PRIMING_MESSAGE))
-    messages.append(template(userMessage.message))
+    messages.append(userMessage.message)
 
     for m in userMessage.prev:
-        messages.append(template(m))
+        messages.append(m)
 
     for m in userMessage.next:
-        messages.append(template(m))
+        messages.append(m)
 
-    answer = chat(messages)
+    answer = chat([
+        SystemMessage(content=PRIMING_MESSAGE),
+        template(' '.join(messages))
+    ])
+
+    facts = json.loads(answer.content)
     return {
         "name": userMessage.name,
-        "facts": [answer]
+        "facts": facts
     }

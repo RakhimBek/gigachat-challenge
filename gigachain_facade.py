@@ -1,8 +1,6 @@
 import json
 import yaml
 
-from pydantic import BaseModel
-
 from storage_dao import insert_fact
 
 """Пример работы с чатом через gigachain"""
@@ -17,23 +15,6 @@ chat = GigaChat(
     credentials=GIGACHAT_CREDENTIAL,
     verify_ssl_certs=False
 )
-
-
-class Message(BaseModel):
-    username: str
-    message: str
-    prev: list[str]
-    next: list[str]
-
-
-class Fact(BaseModel):
-    text: str
-    fact: str
-
-
-class Facts(BaseModel):
-    username: str
-    facts: list[Fact]
 
 
 def template(text):
@@ -88,7 +69,8 @@ def ask_gigachat(userMessage):
             "facts": facts
         }
     except Exception as e:
-        print(f'{answer.content}')
+        print(f'request: {joined_content}')
+        print(f'answer: {answer.content}')
         print(e)
         return {
             "username": userMessage.username,

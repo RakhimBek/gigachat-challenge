@@ -7,9 +7,9 @@ from settings import HOST
 from settings import PORT
 from settings import PROJECT_NAME
 
-from gigachain_facade import Message
+from dtos import Message
 from gigachain_facade import ask_gigachat
-from storage_dao import fetch_all_facts
+from storage_dao import fetch_all_facts, fetch_all_facts_of_a_user
 from storage_initializer import init_database
 
 app = FastAPI(
@@ -35,6 +35,11 @@ async def root():
 @app.get("/api/facts/all")
 async def root():
     return fetch_all_facts()
+
+
+@app.get("/api/facts/search")
+async def root(username):
+    return fetch_all_facts_of_a_user(username)
 
 
 @app.post("/api/ask")

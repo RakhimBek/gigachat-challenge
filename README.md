@@ -10,7 +10,7 @@ fetch("/api/ask", {
         "Content-Type": "application/json",
     },
     body: JSON.stringify({
-        "name": "string",
+        "username": "string",
         "message": "string",
         "prev": [
             "string"

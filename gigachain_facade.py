@@ -19,7 +19,7 @@ chat = GigaChat(
 
 
 class Message(BaseModel):
-    name: str
+    username: str
     message: str
     prev: list[str]
     next: list[str]
@@ -31,7 +31,7 @@ class Fact(BaseModel):
 
 
 class Facts(BaseModel):
-    name: str
+    username: str
     facts: list[Fact]
 
 
@@ -70,9 +70,9 @@ def ask_gigachat(userMessage):
 
     facts = json.loads(answer.content)
     for v in facts:
-        insert_fact(username=userMessage.name.lower(), text=v['text'], fact=v['fact'])
+        insert_fact(username=userMessage.username.lower(), text=v['text'], fact=v['fact'])
 
     return {
-        "name": userMessage.name,
+        "username": userMessage.username,
         "facts": facts
     }

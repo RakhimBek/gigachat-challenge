@@ -35,5 +35,10 @@ async def ask(message: Message):
     return ask_gigachat(message)
 
 
+@app.post("/api/ask/all")
+async def ask_all(messages: list[Message]):
+    return [ask_gigachat(message) for message in messages]
+
+
 if __name__ == '__main__':
     uvicorn.run("main:app", host=HOST, port=PORT, reload=True)

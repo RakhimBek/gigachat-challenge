@@ -17,7 +17,7 @@ git clone git@github.com:RakhimBek/gigachat-challenge.git
 
 ### Copy environment variables file
 ```
-$ add GIGACHAT_CREDENTIAL to .env
+$ add GIGACHAT_CREDENTIAL to .env from "Authorization field" by clicking "Generate new client secret": https://developers.sber.ru/studio/workspaces
 ```
 
 ###  Add environment variable
